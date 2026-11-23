@@ -154,10 +154,42 @@ resource "aws_security_group" "web" {
   }
 }
 
+resource "aws_iam_role" "ec2_role" {
+  name = "cloudforge-ec2-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Principal = {
+          Service = "ec2.amazonaws.com"
+        }
+        Action = "sts:AssumeRole"
+      }
+    ]
+  })
+
+  tags = {
+    Project = "cloudforge"
+  }
+}
+
+resource "aws_iam_role_policy_attachment" "ssm" {
+  role       = aws_iam_role.ec2_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+}
+
+resource "aws_iam_instance_profile" "ec2_profile" {
+  name = "cloudforge-ec2-profile"
+  role = aws_iam_role.ec2_role.name
+}
+
 resource "aws_instance" "web" {
   ami                         = "ami-0e79f34008343c12a"
   instance_type               = "t3.micro"
   subnet_id                   = aws_subnet.public_a.id
+  iam_instance_profile        = aws_iam_instance_profile.ec2_profile.name
   vpc_security_group_ids      = [aws_security_group.web.id]
   associate_public_ip_address = true
 
