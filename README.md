@@ -1,6 +1,6 @@
-Cloudforge
+# Cloudforge
 
-AWS Infrastructure Automation with Terraform and GitHub Actions
+## AWS Infrastructure Automation with Terraform and GitHub Actions
 
 Cloudforge is an Infrastructure as Code project that provisions and manages AWS infrastructure using Terraform, with automated CI checks through GitHub Actions.
 
@@ -13,11 +13,11 @@ Infrastructure
 * IAM role with AWS Systems Manager permissions
 * S3 remote Terraform state with versioning, encryption, and native locking
 
-Tech Stack
+## Tech Stack
 
 AWS · Terraform · Linux · Nginx · Git · GitHub Actions · TFLint
 
-CI Pipeline
+## CI Pipeline
 
 GitHub Actions automatically runs:
 
@@ -38,7 +38,7 @@ To remove the infrastructure:
 
 terraform destroy
 
-Security & Cost
+## Security & Cost
 
 * No SSH ingress configured.
 * EC2 uses an IAM instance profile.
@@ -46,7 +46,7 @@ Security & Cost
 * NAT Gateway omitted to reduce development costs.
 * Local state and sensitive variable files excluded from Git.
 
-Project Objective
+## Project Objective
 
 Demonstrate practical AWS infrastructure provisioning, Terraform automation, cloud networking, IAM, remote state management, and CI workflows.
 
